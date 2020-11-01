@@ -50,15 +50,19 @@ const isBot = function(userAgent) {
  * @returns {String} source
  */
 const source = function() {
-	const ref = (location.search.split('ref=')[1] || '').split('&')[0]
-	const src = (location.search.split('source=')[1] || '').split('&')[0]
-	const utm = (location.search.split('utm_source=')[1] || '').split('&')[0]
 
-	if (ref.length > 0) return ref
-	if (src.length > 0) return src
-	if (utm.length > 0) return utm
+	const searchValue = (key) => (location.search.split(`${ key }=`)[1] || '').split('&')[0]
+
+	const ref = searchValue('ref')
+	const src = searchValue('source')
+	const utm = searchValue('utm_source')
+
+	if (ref !== '') return ref
+	if (src !== '') return src
+	if (utm !== '') return utm
 
 	return undefined
+
 }
 
 /**
